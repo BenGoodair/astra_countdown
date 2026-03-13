@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DON'T OPEN THE BOX 📦</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dirt: #c97c3a;
+      --trail: #2d5016;
+      --sky: #87ceeb;
+      --mud: #5c3d11;
+      --asphalt: #1a1a2e;
+      --neon: #c8f53a;
+      --hot: #ff4d00;
+      --cat: #f5a623;
+      --white: #f7f3ed;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--asphalt);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── TRAIL TEXTURE BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(201,124,58,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(200,245,58,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(45,80,22,0.2) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── FLOATING CAT PAWS ── */
+    .paw {
+      position: fixed;
+      font-size: 1.5rem;
+      opacity: 0.08;
+      animation: drift linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes drift {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.08; }
+      90%  { opacity: 0.08; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem 1rem 0.5rem;
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 12vw, 7rem);
+      line-height: 0.9;
+      color: var(--white);
+      text-shadow: 4px 4px 0 var(--hot), 8px 8px 0 rgba(255,77,0,0.3);
+      letter-spacing: 0.02em;
+    }
+
+    h1 span { color: var(--neon); }
+
+    .subtitle {
+      margin-top: 0.75rem;
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-weight: 700;
+      color: var(--dirt);
+    }
+
+    /* ── BOX HERO ── */
+    .box-section {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .box-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .box-img {
+      width: min(320px, 85vw);
+      border-radius: 12px;
+      border: 3px solid var(--dirt);
+      box-shadow: 0 0 40px rgba(201,124,58,0.4), 0 20px 60px rgba(0,0,0,0.6);
+      display: block;
+    }
+
+    .box-label {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--hot);
+      color: var(--white);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      padding: 4px 18px;
+      border-radius: 20px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(255,77,0,0.5);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+    }
+
+    .cat-peep {
+      position: absolute;
+      bottom: -22px;
+      right: -18px;
+      font-size: 2.5rem;
+      animation: catpeep 3s ease-in-out infinite;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+    }
+
+    @keyframes catpeep {
+      0%, 100% { transform: rotate(-10deg) translateY(0); }
+      50% { transform: rotate(10deg) translateY(-8px); }
+    }
+
+    /* ── COUNTDOWN ── */
+    .countdown-section {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .countdown-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 1rem;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(0.5rem, 3vw, 1.5rem);
+      flex-wrap: wrap;
+    }
+
+    .unit {
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(200,245,58,0.2);
+      border-radius: 16px;
+      padding: clamp(0.8rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem);
+      min-width: clamp(70px, 18vw, 110px);
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .unit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--neon);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .unit:hover::before { transform: scaleX(1); }
+
+    .unit-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 10vw, 5rem);
+      line-height: 1;
+      color: var(--neon);
+      text-shadow: 0 0 20px rgba(200,245,58,0.5);
+      display: block;
+    }
+
+    .unit-name {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(247,243,237,0.5);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .colon {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 10vw, 5rem);
+      color: var(--dirt);
+      align-self: center;
+      margin-top: -1rem;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* ── PROGRESS TRAIL ── */
+    .trail-section {
+      position: relative;
+      z-index: 1;
+      padding: 0.5rem 2rem 1.5rem;
+    }
+
+    .trail-track {
+      height: 10px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 10px;
+      overflow: visible;
+      position: relative;
+    }
+
+    .trail-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--trail), var(--neon));
+      transition: width 1s linear;
+      position: relative;
+    }
+
+    .trail-runner {
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      filter: drop-shadow(0 0 6px var(--neon));
+    }
+
+    .trail-ends {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(247,243,237,0.4);
+    }
+
+    /* ── FUN FACTS TICKER ── */
+    .ticker-section {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      background: rgba(200,245,58,0.07);
+      border-top: 1px solid rgba(200,245,58,0.15);
+      border-bottom: 1px solid rgba(200,245,58,0.15);
+      padding: 0.6rem 0;
+      margin: 0.5rem 0;
+    }
+
+    .ticker-inner {
+      display: flex;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      padding: 0 3rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--neon);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .ticker-item span { color: var(--cat); }
+
+    /* ── HYPE SECTION ── */
+    .hype-section {
+      position: relative;
+      z-index: 1;
+      padding: 1rem 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hype-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.2rem;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .hype-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--neon);
+    }
+
+    .hype-icon { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+    .hype-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.05em;
+      color: var(--neon);
+      display: block;
+    }
+    .hype-text {
+      font-size: 0.82rem;
+      color: rgba(247,243,237,0.6);
+      margin-top: 0.3rem;
+      line-height: 1.5;
+    }
+
+    /* ── OPENED STATE ── */
+    #opened-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,20,0.97);
+      z-index: 100;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    #opened-overlay.show { display: flex; }
+
+    .fireworks {
+      font-size: clamp(3rem, 15vw, 6rem);
+      animation: spin 0.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes spin {
+      from { transform: scale(1) rotate(-5deg); }
+      to { transform: scale(1.15) rotate(5deg); }
+    }
+
+    .open-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 12vw, 6rem);
+      color: var(--neon);
+      text-shadow: 4px 4px 0 var(--hot);
+      line-height: 1;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .open-sub {
+      font-size: clamp(1rem, 4vw, 1.4rem);
+      font-weight: 700;
+      color: var(--dirt);
+      max-width: 500px;
+    }
+
+    .confetti-ring {
+      font-size: 2.5rem;
+      margin-top: 1rem;
+      animation: spin2 4s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin2 {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.75rem;
+      color: rgba(247,243,237,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    footer span { color: var(--cat); }
+  </style>
+</head>
+<body>
+
+  <!-- Floating paws -->
+  <div class="paw" style="left:5%;  animation-duration:12s; animation-delay:0s;  font-size:1.2rem;">🐾</div>
+  <div class="paw" style="left:20%; animation-duration:17s; animation-delay:3s;">🐾</div>
+  <div class="paw" style="left:40%; animation-duration:14s; animation-delay:7s;  font-size:2rem;">🐾</div>
+  <div class="paw" style="left:60%; animation-duration:19s; animation-delay:1s;">🐾</div>
+  <div class="paw" style="left:78%; animation-duration:11s; animation-delay:5s;  font-size:1rem;">🐾</div>
+  <div class="paw" style="left:90%; animation-duration:15s; animation-delay:9s;">🐾</div>
+
+  <header>
+    <div class="eyebrow">⚡ incoming gear drop ⚡</div>
+    <h1>DON'T<br>OPEN THE<br><span>BOX</span></h1>
+    <div class="subtitle">New Astras are in there. We can feel it. 🏔️</div>
+  </header>
+
+  <section class="box-section">
+    <div class="box-wrapper">
+      <span class="box-label">🔒 SEALED WITH HYPE</span>
+      <img class="box-img" src="box.png" alt="The sacred box of trail shoes" />
+      <span class="cat-peep">😼</span>
+    </div>
+  </section>
+
+  <section class="countdown-section">
+    <div class="countdown-label">🏁 time until you can rip it open</div>
+    <div class="countdown">
+      <div class="unit">
+        <span class="unit-number" id="hours">05</span>
+        <span class="unit-name">Hours</span>
+      </div>
+      <div class="colon">:</div>
+      <div class="unit">
+        <span class="unit-number" id="minutes">00</span>
+        <span class="unit-name">Mins</span>
+      </div>
+      <div class="colon">:</div>
+      <div class="unit">
+        <span class="unit-number" id="seconds">00</span>
+        <span class="unit-name">Secs</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="trail-section">
+    <div class="trail-track">
+      <div class="trail-fill" id="trail-fill" style="width:0%">
+        <span class="trail-runner">🏃</span>
+      </div>
+    </div>
+    <div class="trail-ends">
+      <span>📦 Box arrived</span>
+      <span>👟 OPEN IT</span>
+    </div>
+  </section>
+
+  <div class="ticker-section">
+    <div class="ticker-inner" id="ticker">
+      <!-- duplicated for seamless loop -->
+    </div>
+  </div>
+
+  <section class="hype-section">
+    <div class="hype-card">
+      <span class="hype-icon">🏔️</span>
+      <span class="hype-title">Trail Ready</span>
+      <p class="hype-text">Astras are made for gnarly singletrack. These feet are going places.</p>
+    </div>
+    <div class="hype-card">
+      <span class="hype-icon">🚵</span>
+      <span class="hype-title">Ride & Run</span>
+      <p class="hype-text">Ride all morning, run all afternoon. The Devon Rex judges from the sofa.</p>
+    </div>
+    <div class="hype-card">
+      <span class="hype-icon">😻</span>
+      <span class="hype-title">Cat Approved</span>
+      <p class="hype-text">Your Devon Rex WILL sit in the box. This is not negotiable.</p>
+    </div>
+  </section>
+
+  <footer>Made with 🐾 and trail dust &nbsp;|&nbsp; <span>Don't let the cat eat the laces</span></footer>
+
+  <!-- OPENED STATE -->
+  <div id="opened-overlay">
+    <div class="fireworks">🎉</div>
+    <div class="open-title">RIP IT<br>OPEN!!</div>
+    <p class="open-sub">Your Astras have been waiting patiently. Go go go! 🏔️👟🚵</p>
+    <span class="confetti-ring">🐾</span>
+  </div>
+
+  <script>
+    // ── SET END TIME: 5 hours from page load ──
+    const DURATION_MS = 5 * 60 * 60 * 1000;
+    const endTime = Date.now() + DURATION_MS;
+
+    const hoursEl   = document.getElementById('hours');
+    const minsEl    = document.getElementById('minutes');
+    const secsEl    = document.getElementById('seconds');
+    const fillEl    = document.getElementById('trail-fill');
+    const overlay   = document.getElementById('opened-overlay');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      const remaining = endTime - Date.now();
+      if (remaining <= 0) {
+        hoursEl.textContent = '00';
+        minsEl.textContent  = '00';
+        secsEl.textContent  = '00';
+        fillEl.style.width  = '100%';
+        overlay.classList.add('show');
+        return;
+      }
+
+      const totalSecs = Math.ceil(remaining / 1000);
+      const h = Math.floor(totalSecs / 3600);
+      const m = Math.floor((totalSecs % 3600) / 60);
+      const s = totalSecs % 60;
+
+      hoursEl.textContent = pad(h);
+      minsEl.textContent  = pad(m);
+      secsEl.textContent  = pad(s);
+
+      const pct = ((DURATION_MS - remaining) / DURATION_MS) * 100;
+      fillEl.style.width = pct.toFixed(2) + '%';
+
+      // Swap runner emoji as it gets close
+      const runner = fillEl.querySelector('.trail-runner');
+      if (pct > 80) runner.textContent = '🏃💨';
+      else if (pct > 50) runner.textContent = '🏃';
+
+      setTimeout(tick, 1000);
+    }
+
+    tick();
+
+    // ── TICKER ──
+    const facts = [
+      '🏔️ Astras have a rock plate so you can fly over scree',
+      '🚵 Devon Rex cats can clear 4ft obstacles (especially onto your bike)',
+      '😸 Devon Rex fur is basically trail dust camouflage',
+      '👟 Wet rocks? Astra grip says: no problem',
+      '🐾 Cats love shoebox cardboard more than the actual shoes',
+      '⚡ This countdown brought to you by pure, barely-contained hype',
+      '🚵 Cycling legs + running legs = same legs, somehow',
+      '😼 The Devon Rex has already claimed the shoebox btw',
+    ];
+
+    const ticker = document.getElementById('ticker');
+    // duplicate for seamless scroll
+    const allFacts = [...facts, ...facts];
+    ticker.innerHTML = allFacts
+      .map(f => `<span class="ticker-item">${f} <span>///</span></span>`)
+      .join('');
+  </script>
+</body>
+</html>
