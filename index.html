@@ -90,35 +90,6 @@
       line-height: 1.6;
     }
 
-    .quote-bubble {
-      position: relative;
-      z-index: 1;
-      max-width: 480px;
-      margin: 1.5rem auto 0;
-      padding: 0 1.5rem;
-    }
-
-    .bubble {
-      background: white;
-      border-radius: 20px;
-      padding: 1rem 1.3rem;
-      box-shadow: 0 4px 24px rgba(100,80,180,0.1);
-      font-size: 0.95rem;
-      font-style: italic;
-      color: var(--muted);
-      line-height: 1.6;
-      border-left: 4px solid var(--purple);
-    }
-
-    .bubble-attr {
-      font-style: normal;
-      font-weight: 700;
-      color: var(--purple);
-      font-size: 0.8rem;
-      margin-top: 0.4rem;
-      display: block;
-    }
-
     .box-section {
       position: relative;
       z-index: 1;
@@ -240,10 +211,57 @@
       50%      { opacity: 0.25; }
     }
 
+    /* ── TIMEZONE CLOCKS ── */
+    .tz-section {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .tz-card {
+      background: white;
+      border-radius: 16px;
+      padding: 0.65rem 1.3rem;
+      box-shadow: 0 4px 16px rgba(100,80,200,0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .tz-flag { font-size: 1.3rem; }
+
+    .tz-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .tz-time {
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--purple);
+      min-width: 5.5ch;
+      text-align: right;
+    }
+
+    .tz-divider {
+      font-size: 1.4rem;
+      color: var(--lilac);
+      font-weight: 700;
+    }
+
     .trail-section {
       position: relative;
       z-index: 1;
-      padding: 0.5rem 2rem 2rem;
+      padding: 1.25rem 2rem 2rem;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -309,7 +327,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* ── OPEN OVERLAY ── */
     #opened-overlay {
       display: none;
       position: fixed;
@@ -385,9 +402,8 @@
   <header>
     <div class="eyebrow">🎉 cult membership confirmed</div>
     <h1>Anna's <span class="pop">Altras</span><br>are <span class="pop pop2">HERE!</span></h1>
-    <p class="subtitle">After a nail-biting saga (<3) — the shoes have landed. 👟✨</p>
+    <p class="subtitle">After a nail-biting saga (&lt;3) — the shoes have landed. 👟✨</p>
   </header>
-
 
   <section class="box-section">
     <div class="box-wrapper">
@@ -405,6 +421,20 @@
       <div class="unit"><span class="unit-number" id="minutes">00</span><span class="unit-name">Mins</span></div>
       <div class="colon">:</div>
       <div class="unit"><span class="unit-number" id="seconds">00</span><span class="unit-name">Secs</span></div>
+    </div>
+  </section>
+
+  <section class="tz-section">
+    <div class="tz-card">
+      <span class="tz-flag">🇬🇧</span>
+      <span class="tz-label">London</span>
+      <span class="tz-time" id="tz-uk">--:--:--</span>
+    </div>
+    <div class="tz-divider">·</div>
+    <div class="tz-card">
+      <span class="tz-flag">🇨🇦</span>
+      <span class="tz-label">Calgary</span>
+      <span class="tz-time" id="tz-ca">--:--:--</span>
     </div>
   </section>
 
@@ -434,8 +464,10 @@
   </div>
 
   <script>
-    const DURATION_MS = 5 * 60 * 60 * 1000;
-    const endTime = Date.now() + DURATION_MS;
+    // Target: midnight UK time (UTC) = 6pm Calgary time (MDT, UTC-6) on 14 March 2026
+    const endTime    = new Date('2026-03-14T00:00:00Z').getTime();
+    const startTime  = new Date('2026-03-13T19:00:00Z').getTime(); // ~5hr window for progress bar
+    const DURATION_MS = endTime - startTime;
 
     const hoursEl  = document.getElementById('hours');
     const minsEl   = document.getElementById('minutes');
@@ -443,13 +475,23 @@
     const fillEl   = document.getElementById('trail-fill');
     const runnerEl = document.getElementById('runner-emoji');
     const overlay  = document.getElementById('opened-overlay');
+    const ukEl     = document.getElementById('tz-uk');
+    const caEl     = document.getElementById('tz-ca');
 
     const bikeEmojis = ['🚴‍♀️','🚵‍♀️','🚴','🚵','🏃‍♀️','🚴‍♀️','🚵'];
 
-    function pad(n) { return String(n).padStart(2,'0'); }
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function updateClocks() {
+      const now = new Date();
+      ukEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/London',   hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      caEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'America/Edmonton', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
 
     function tick() {
       const remaining = endTime - Date.now();
+      updateClocks();
+
       if (remaining <= 0) {
         hoursEl.textContent = '00';
         minsEl.textContent  = '00';
@@ -458,17 +500,19 @@
         overlay.classList.add('show');
         return;
       }
+
       const t = Math.ceil(remaining / 1000);
       hoursEl.textContent = pad(Math.floor(t / 3600));
       minsEl.textContent  = pad(Math.floor((t % 3600) / 60));
       secsEl.textContent  = pad(t % 60);
 
-      const pct = ((DURATION_MS - remaining) / DURATION_MS) * 100;
+      const pct = Math.min(((Date.now() - startTime) / DURATION_MS) * 100, 100);
       fillEl.style.width = pct.toFixed(2) + '%';
       runnerEl.textContent = bikeEmojis[Math.floor(Date.now() / 3000) % bikeEmojis.length];
 
       setTimeout(tick, 1000);
     }
+
     tick();
 
     const items = [
