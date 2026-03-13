@@ -238,9 +238,10 @@
     .tz-label {
       font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--muted);
+      white-space: nowrap;
     }
 
     .tz-time {
@@ -433,8 +434,14 @@
     <div class="tz-divider">·</div>
     <div class="tz-card">
       <span class="tz-flag">🇨🇦</span>
-      <span class="tz-label">Three Puddles: Anna, Janina, Yoni Bären</span>
+      <span class="tz-label">JaninaBär</span>
       <span class="tz-time" id="tz-ca">--:--:--</span>
+    </div>
+    <div class="tz-divider">·</div>
+    <div class="tz-card">
+      <span class="tz-flag">🏔️</span>
+      <span class="tz-label">Anna & Yoni Bären</span>
+      <span class="tz-time" id="tz-sq">--:--:--</span>
     </div>
   </section>
 
@@ -464,9 +471,9 @@
   </div>
 
   <script>
-    // Target: midnight UK time (UTC) = 6pm Calgary time (MDT, UTC-6) on 14 March 2026
+    // Target: midnight UK (UTC) = 6pm Calgary (MST, UTC-7) = 4pm Squamish (PST, UTC-8)
     const endTime    = new Date('2026-03-14T00:00:00Z').getTime();
-    const startTime  = new Date('2026-03-13T19:00:00Z').getTime(); // ~5hr window for progress bar
+    const startTime  = new Date('2026-03-13T19:00:00Z').getTime();
     const DURATION_MS = endTime - startTime;
 
     const hoursEl  = document.getElementById('hours');
@@ -477,6 +484,7 @@
     const overlay  = document.getElementById('opened-overlay');
     const ukEl     = document.getElementById('tz-uk');
     const caEl     = document.getElementById('tz-ca');
+    const sqEl     = document.getElementById('tz-sq');
 
     const bikeEmojis = ['🚴‍♀️','🚵‍♀️','🚴','🚵','🏃‍♀️','🚴‍♀️','🚵'];
 
@@ -484,8 +492,9 @@
 
     function updateClocks() {
       const now = new Date();
-      ukEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/London',   hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      caEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'America/Edmonton', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      ukEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/London',      hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      caEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'America/Edmonton',    hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      sqEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'America/Vancouver',   hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
 
     function tick() {
