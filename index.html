@@ -376,6 +376,159 @@
       to   { transform: translateY(-8px); }
     }
 
+    /* ── POST-IT NOTES ── */
+    .notes-section {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2.5rem;
+    }
+
+    .notes-title {
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 1.2rem;
+    }
+    .notes-title span { color: var(--purple); }
+
+    /* who's writing selector */
+    .author-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .author-btn {
+      border: 2px solid transparent;
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: white;
+      color: var(--muted);
+      box-shadow: 0 2px 8px rgba(100,80,200,0.1);
+      transition: all 0.15s;
+    }
+    .author-btn:hover { transform: translateY(-2px); }
+    .author-btn.active-ben     { background: #dbeafe; border-color: #4ab3f4; color: #1e40af; }
+    .author-btn.active-janina  { background: #fef3c7; border-color: #ffb347; color: #92400e; }
+    .author-btn.active-anna    { background: #ede9fe; border-color: #9b6fdc; color: #4c1d95; }
+
+    .note-compose {
+      display: none;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
+    }
+    .note-compose.visible { display: flex; }
+
+    .note-compose textarea {
+      width: 100%;
+      border: 2px solid var(--lilac);
+      border-radius: 16px;
+      padding: 0.8rem 1rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      resize: none;
+      outline: none;
+      background: white;
+      box-shadow: 0 2px 12px rgba(100,80,200,0.08);
+      transition: border-color 0.2s;
+    }
+    .note-compose textarea:focus { border-color: var(--purple); }
+
+    .note-submit {
+      align-self: flex-end;
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 8px 22px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(155,111,220,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .note-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(155,111,220,0.45); }
+
+    /* the board */
+    .notes-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+      gap: 1rem;
+    }
+
+    .postit {
+      border-radius: 4px 16px 16px 4px;
+      padding: 1rem 1rem 0.8rem;
+      box-shadow: 3px 4px 18px rgba(0,0,0,0.1), -1px -1px 0 rgba(0,0,0,0.04);
+      position: relative;
+      transform: rotate(var(--rot));
+      transition: transform 0.2s, box-shadow 0.2s;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .postit:hover { transform: rotate(0deg) scale(1.03); box-shadow: 6px 8px 24px rgba(0,0,0,0.15); }
+
+    .postit.ben    { background: #dbeafe; }
+    .postit.janina { background: #fef9c3; }
+    .postit.anna   { background: #ede9fe; }
+
+    .postit-text {
+      font-size: 0.9rem;
+      color: var(--ink);
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .postit-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.6rem;
+    }
+
+    .postit-author {
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800;
+      font-size: 0.78rem;
+      opacity: 0.6;
+    }
+
+    .postit-delete {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.8rem;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .postit-delete:hover { opacity: 0.7; }
+
+    .notes-empty {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      padding: 1.5rem;
+      grid-column: 1 / -1;
+    }
+
     footer {
       position: relative;
       z-index: 1;
@@ -461,6 +614,25 @@
     <div class="ticker-inner" id="ticker"></div>
   </div>
 
+  <section class="notes-section">
+    <div class="notes-title">📝 Leave a <span>note</span> for the group</div>
+
+    <div class="author-row">
+      <button class="author-btn" data-author="ben"    onclick="selectAuthor('ben')">🇬🇧 BennyBär</button>
+      <button class="author-btn" data-author="janina" onclick="selectAuthor('janina')">🇨🇦 JaninaBär</button>
+      <button class="author-btn" data-author="anna"   onclick="selectAuthor('anna')">🏔️ Anna & Yoni</button>
+    </div>
+
+    <div class="note-compose" id="note-compose">
+      <textarea id="note-text" rows="3" placeholder="Write something lovely..."></textarea>
+      <button class="note-submit" onclick="submitNote()">Pin it 📌</button>
+    </div>
+
+    <div class="notes-board" id="notes-board">
+      <div class="notes-empty">No notes yet — be the first! 💌</div>
+    </div>
+  </section>
+
   <footer>Made with 🐾 and nail-biting energy · Welcome to the cult, Anna 🌿</footer>
 
   <div id="opened-overlay">
@@ -536,6 +708,97 @@
     ticker.innerHTML = [...items,...items].map(t =>
       `<span class="ticker-item">${t} &nbsp;·&nbsp; </span>`
     ).join('');
+    // ── POST-IT NOTES (JSONBin.io) ──
+    // 1. Go to https://jsonbin.io and create a free account
+    // 2. Create a new bin with initial content: {"notes":[]}
+    // 3. Copy your Bin ID and API key into the two lines below
+    const JSONBIN_ID  = '69b4646cb7ec241ddc677a54';
+    const JSONBIN_KEY = '$2a$10$NywQTlp6HzLJjy/e2Kv8XOXKF.SB48CaV1LkRERipJzW9tzwdH3kS';
+    const BIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}`;
+
+    const AUTHORS = {
+      ben:    { label: '🇬🇧 BennyBär',   cls: 'ben' },
+      janina: { label: '🇨🇦 JaninaBär',  cls: 'janina' },
+      anna:   { label: '🏔️ Anna & Yoni', cls: 'anna' },
+    };
+    const ROTS = ['-2deg','1.5deg','-1deg','2.5deg','-3deg','1deg'];
+
+    let currentAuthor = null;
+    let allNotes = [];
+
+    function selectAuthor(who) {
+      currentAuthor = who;
+      document.querySelectorAll('.author-btn').forEach(b => {
+        b.className = 'author-btn';
+        if (b.dataset.author === who) b.classList.add('active-' + who);
+      });
+      document.getElementById('note-compose').classList.add('visible');
+      document.getElementById('note-text').focus();
+    }
+
+    async function fetchNotes() {
+      if (JSONBIN_ID === 'YOUR_BIN_ID_HERE') {
+        renderNotes([{ id: 1, author: 'anna', text: '👋 Add your JSONBin ID and API key to make notes work!' }]);
+        return;
+      }
+      try {
+        const res = await fetch(BIN_URL + '/latest', {
+          headers: { 'X-Master-Key': JSONBIN_KEY }
+        });
+        const data = await res.json();
+        allNotes = data.record.notes || [];
+        renderNotes(allNotes);
+      } catch (e) {
+        console.error('Could not load notes', e);
+      }
+    }
+
+    async function saveNotes(notes) {
+      await fetch(BIN_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
+        body: JSON.stringify({ notes })
+      });
+    }
+
+    function renderNotes(notes) {
+      const board = document.getElementById('notes-board');
+      if (!notes.length) {
+        board.innerHTML = '<div class="notes-empty">No notes yet — be the first! 💌</div>';
+        return;
+      }
+      board.innerHTML = notes.map((n, i) => `
+        <div class="postit ${AUTHORS[n.author]?.cls || 'anna'}" style="--rot:${ROTS[i % ROTS.length]}">
+          <div class="postit-text">${n.text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+          <div class="postit-meta">
+            <span class="postit-author">${AUTHORS[n.author]?.label || n.author}</span>
+            <button class="postit-delete" onclick="deleteNote(${n.id})" title="Remove">✕</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function submitNote() {
+      const text = document.getElementById('note-text').value.trim();
+      if (!text || !currentAuthor) return;
+      const btn = document.querySelector('.note-submit');
+      btn.textContent = 'Saving…';
+      btn.disabled = true;
+      allNotes.push({ id: Date.now(), author: currentAuthor, text });
+      await saveNotes(allNotes);
+      document.getElementById('note-text').value = '';
+      renderNotes(allNotes);
+      btn.textContent = 'Pin it 📌';
+      btn.disabled = false;
+    }
+
+    async function deleteNote(id) {
+      allNotes = allNotes.filter(n => n.id !== id);
+      await saveNotes(allNotes);
+      renderNotes(allNotes);
+    }
+
+    fetchNotes();
   </script>
 </body>
 </html>
