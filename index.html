@@ -7,14 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --sky:    #e0f4ff;
-      --blue:   #4ab3f4;
       --purple: #9b6fdc;
       --lilac:  #d4b0f7;
+      --blue:   #4ab3f4;
       --peach:  #ffb347;
-      --rose:   #ff8fa3;
-      --green:  #6fcf97;
-      --cream:  #fffdf7;
       --ink:    #2e2458;
       --muted:  #7a6fa8;
     }
@@ -79,7 +75,7 @@
     }
     @keyframes wobble {
       0%,100% { transform: rotate(-2deg); }
-      50% { transform: rotate(2deg); }
+      50%      { transform: rotate(2deg); }
     }
     h1 .pop2 { color: var(--peach); }
 
@@ -107,7 +103,7 @@
       border-radius: 20px;
       padding: 1rem 1.3rem;
       box-shadow: 0 4px 24px rgba(100,80,180,0.1);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-style: italic;
       color: var(--muted);
       line-height: 1.6;
@@ -179,7 +175,7 @@
       position: relative;
       z-index: 1;
       text-align: center;
-      padding: 2rem 1rem 1rem;
+      padding: 2.5rem 1rem 1rem;
     }
 
     .countdown-label {
@@ -247,7 +243,7 @@
     .trail-section {
       position: relative;
       z-index: 1;
-      padding: 0.5rem 2rem 1rem;
+      padding: 0.5rem 2rem 2rem;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -294,7 +290,7 @@
       overflow: hidden;
       background: linear-gradient(90deg, var(--purple), var(--blue));
       padding: 0.7rem 0;
-      margin: 1rem 0;
+      margin: 0 0 2rem;
     }
 
     .ticker-inner {
@@ -313,109 +309,7 @@
       letter-spacing: 0.08em;
     }
 
-    .saga-section {
-      position: relative;
-      z-index: 1;
-      max-width: 540px;
-      margin: 0 auto;
-      padding: 0 1.5rem 1.5rem;
-    }
-
-    .saga-title {
-      font-family: 'Baloo 2', cursive;
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--ink);
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .saga-title span { color: var(--purple); }
-
-    .chat-msg {
-      display: flex;
-      gap: 0.7rem;
-      margin-bottom: 0.65rem;
-      align-items: flex-start;
-    }
-    .chat-msg.right { flex-direction: row-reverse; }
-
-    .avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-weight: 800;
-      font-family: 'Baloo 2', cursive;
-    }
-    .av-a { background: var(--lilac); color: var(--ink); }
-    .av-b { background: var(--blue);  color: white; }
-    .av-j { background: var(--peach); color: var(--ink); }
-
-    .msg-bubble {
-      max-width: 76%;
-      background: white;
-      border-radius: 18px;
-      padding: 0.6rem 0.9rem;
-      font-size: 0.85rem;
-      line-height: 1.5;
-      color: var(--ink);
-      box-shadow: 0 3px 12px rgba(100,80,180,0.08);
-    }
-    .chat-msg.right .msg-bubble {
-      background: var(--purple);
-      color: white;
-    }
-
-    .msg-name {
-      font-size: 0.68rem;
-      font-weight: 700;
-      opacity: 0.55;
-      margin-bottom: 2px;
-    }
-
-    .cards-section {
-      position: relative;
-      z-index: 1;
-      padding: 0.5rem 1.5rem 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
-      gap: 1rem;
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 1.3rem 1rem;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(100,80,200,0.08);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 32px rgba(100,80,200,0.15);
-    }
-
-    .card-icon { font-size: 2.6rem; display: block; margin-bottom: 0.5rem; }
-    .card-title {
-      font-family: 'Baloo 2', cursive;
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--ink);
-      display: block;
-    }
-    .card-text {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.3rem;
-      line-height: 1.5;
-    }
-
+    /* ── OPEN OVERLAY ── */
     #opened-overlay {
       display: none;
       position: fixed;
@@ -497,7 +391,7 @@
   <div class="quote-bubble">
     <div class="bubble">
       "This box contains my entry ticket to the cult."
-      <span class="bubble-attr">— Anna Carlqvist, 13 March 2026, with maximum hype energy 🥹</span>
+      <span class="bubble-attr">— Anna, 13 March 2026 🥹</span>
     </div>
   </div>
 
@@ -535,82 +429,6 @@
   <div class="ticker-section">
     <div class="ticker-inner" id="ticker"></div>
   </div>
-
-  <section class="saga-section">
-    <div class="saga-title">The <span>Nail-Biting Saga</span> 💅 an abridged retelling</div>
-
-    <div class="chat-msg">
-      <div class="avatar av-a">A</div>
-      <div class="msg-bubble"><div class="msg-name">Anna</div>I ordered a pair… in part because they were pretty and purple 💜</div>
-    </div>
-    <div class="chat-msg">
-      <div class="avatar av-a">A</div>
-      <div class="msg-bubble"><div class="msg-name">Anna</div>I feel like I might have stumbled upon a bit of a cult here 🌿</div>
-    </div>
-    <div class="chat-msg right">
-      <div class="avatar av-b">B</div>
-      <div class="msg-bubble"><div class="msg-name">Ben</div>Happy shoe day! Is it a happy shoe day? 👟</div>
-    </div>
-    <div class="chat-msg">
-      <div class="avatar av-a">A</div>
-      <div class="msg-bubble"><div class="msg-name">Anna</div>One site: estimated delivery 11th March. Another: "delayed in transit, no estimate available" 😬</div>
-    </div>
-    <div class="chat-msg">
-      <div class="avatar av-a">A</div>
-      <div class="msg-bubble"><div class="msg-name">Anna</div>I had a chat in circles with the bot. Because. I'm excited by new shoe day!! 🤩</div>
-    </div>
-    <div class="chat-msg right">
-      <div class="avatar av-j">J</div>
-      <div class="msg-bubble"><div class="msg-name">Janina</div>Nail biter 😂</div>
-    </div>
-    <div class="chat-msg">
-      <div class="avatar av-a">A</div>
-      <div class="msg-bubble"><div class="msg-name">Anna</div>Friends. Big news. 🎉 This box contains my entry ticket to the cult.</div>
-    </div>
-    <div class="chat-msg right">
-      <div class="avatar av-j">J</div>
-      <div class="msg-bubble"><div class="msg-name">Janina</div>OPEN OPEN OPEN 😱</div>
-    </div>
-    <div class="chat-msg right">
-      <div class="avatar av-b">B</div>
-      <div class="msg-bubble"><div class="msg-name">Ben</div>In slow mo!! 🎬</div>
-    </div>
-    <div class="chat-msg">
-      <div class="avatar av-a">A</div>
-      <div class="msg-bubble"><div class="msg-name">Anna</div>We have to hold up for another few hours 🥲 They're still at Yoni's work…</div>
-    </div>
-    <div class="chat-msg right">
-      <div class="avatar av-b">B</div>
-      <div class="msg-bubble"><div class="msg-name">Ben</div>Hours?! HOW MANY HOURS?! 😩</div>
-    </div>
-    <div class="chat-msg">
-      <div class="avatar av-a">A</div>
-      <div class="msg-bubble"><div class="msg-name">Anna</div>Enough for coffee with a friend and a bike ride 👀 I'll zoom past the warehouse 🚴‍♀️</div>
-    </div>
-  </section>
-
-  <section class="cards-section">
-    <div class="card">
-      <span class="card-icon">🚵‍♀️</span>
-      <span class="card-title">Cult Initiated</span>
-      <p class="card-text">Pretty AND purple. Altra dropped a new Timp version the same week. It was simply meant to be.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🚴</span>
-      <span class="card-title">Rode Past the Warehouse</span>
-      <p class="card-text">Classic Anna move: coffee, bike ride, accidentally end up near the shoes. Cult energy.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">😼</span>
-      <span class="card-title">Devon Rex Dibs</span>
-      <p class="card-text">The cat has already claimed the box. This is not negotiable. This is simply known.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🌿</span>
-      <span class="card-title">The Outdoorsy Cult</span>
-      <p class="card-text">Janina: in recovery from Oxford. Ben: already deep in. Anna: soft-launching the new one. 🚵</p>
-    </div>
-  </section>
 
   <footer>Made with 🐾 and nail-biting energy · Welcome to the cult, Anna 🌿</footer>
 
@@ -667,9 +485,9 @@
       '🚴‍♀️ Anna rode past the warehouse on a bike',
       '👟 Entry ticket to the trail running cult',
       '😹 The cat has claimed the box already',
-      '🚵‍♀️ Janina in recovery · signed up anyway',
+      '🚵‍♀️ It\'s always a bit of a nail biter',
       '🚴 The country is just very big okay',
-      '✨ Always a bit of a nail biter',
+      '✨ Welcome to the cult Anna',
     ];
     const ticker = document.getElementById('ticker');
     ticker.innerHTML = [...items,...items].map(t =>
